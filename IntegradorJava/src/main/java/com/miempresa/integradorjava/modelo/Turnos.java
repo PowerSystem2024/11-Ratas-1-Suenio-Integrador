@@ -1,6 +1,9 @@
 package com.miempresa.integradorjava.modelo;
 import com.miempresa.integradorjava.modelo.Cliente;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Turnos {
   //Atributos
   private int dia;
@@ -8,6 +11,7 @@ public class Turnos {
   private int anio;
   private int hora;
   private Cliente cliente;
+  private static List<Turnos> listaTurnos = new ArrayList<>();
 
   //Constructor
   public Turnos(int dia, int mes, int anio, int hora, Cliente cliente) {
@@ -45,6 +49,10 @@ public class Turnos {
   }
   public Cliente getCliente() {
     return cliente;
+  }
+
+  public static void setListaTurnos(List<Turnos> listaTurnos) {
+    Turnos.listaTurnos = listaTurnos;
   }
 
   @Override
