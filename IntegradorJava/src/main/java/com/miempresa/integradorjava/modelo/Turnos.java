@@ -52,7 +52,6 @@ public class Turnos {
     return "Fecha: " + dia+"/"+mes+"/"+anio+ "\nTurno: " + hora + "\nCliente: " + cliente;
   }
 
-
   private static String[][] horarios = {
           {"Lun", "09:00 - 19:30"},
           {"Mar", "09:00 - 19:30"},
@@ -69,5 +68,3 @@ public class Turnos {
     }
   }
 }
-
-
