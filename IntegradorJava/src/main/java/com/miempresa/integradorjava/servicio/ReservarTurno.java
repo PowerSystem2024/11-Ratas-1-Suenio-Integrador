@@ -1,13 +1,15 @@
 package com.miempresa.integradorjava.servicio;
 
+import com.miempresa.integradorjava.modelo.Cliente;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class ReservarTurno {
 
-    public void llenarMatrices (List<String> turnos, String[][] cronograma, String[][] reserva) {
-        int cont = 0;
-        int cont1 = 1;
-        int numAzar = 0;
+    public List<String> cargarTurnos(){
+        List<String> turnos = new ArrayList<>();
 
         //Completa los horarios de los turnos
         turnos.add("   09:00   ");
@@ -18,8 +20,17 @@ public class ReservarTurno {
         turnos.add("   16:00   ");
         turnos.add("   18:00   ");
 
-        for (int i = 0; i < 29; i++) {
-            for (int j = 0; j < 6; j++) {
+        return turnos;
+    }
+
+    public String[][] llenarMatrices () {
+        String[][] cronograma = new String[29][6];
+        int cont = 0;
+        int cont1 = 1;
+        int numAzar = 0;
+
+        for (int i = 0; i < cronograma.length; i++) {
+            for (int j = 0; j < cronograma[0].length; j++) {
                 //Se utiliza la función 'Math.random()' para llenar, aleatoreamente, algunas posiciones del cronograma, y
                 //de la sensación de encontrarse con un sitio concurrido.
                 numAzar = (int) (Math.random() * 2) + 1;
@@ -27,12 +38,12 @@ public class ReservarTurno {
                 //Condicional para indicar con 'Cerrado', los días sábados y domingos.
                 if (i != cont && i != cont1) {
                     if (numAzar == 0) {
-                        cronograma[i][j] = "       ";
+                        cronograma[i][j] = "         ";
                     } else {
-                        cronograma[i][j] = "   R   ";
+                        cronograma[i][j] = "Reservado";
                     }
                 } else {
-                    cronograma[i][j] = "Cerrado";
+                    cronograma[i][j] = " Cerrado ";
                 }
             }
 
@@ -44,13 +55,7 @@ public class ReservarTurno {
                 cont += 7;
             }
         }
-
-        //Inicializamos todos los lugares de las reservas en "" para que no de error en la comprobación posterior.
-        for (int i = 0; i < 19; i++) {
-            for (int j = 0; j < 2; j++) {
-                reserva[i][j] = "";
-            }
-        }
+        return cronograma;
     }
 
     public void mostrarTurnos(List<String> turnos, String[][] cronograma) {
@@ -107,5 +112,99 @@ public class ReservarTurno {
 
             cont = 0;
         }
+    }
+
+    public Cliente cargarCliente(){
+        String nombre;
+        String apellido;
+        String correo;
+        String telefono;
+
+        Scanner entrada = new Scanner(System.in);
+
+        System.out.println("Ingrese su nombre");
+        nombre = entrada.nextLine();
+        System.out.println("Ingrese su apellido");
+        apellido = entrada.nextLine();
+        System.out.println("Ingrese su correo");
+        correo = entrada.nextLine();
+        System.out.println("Ingrese su telefono");
+        telefono = entrada.nextLine();
+
+        entrada.close();
+        Cliente cliente = new Cliente(nombre, apellido, correo, telefono);
+
+        return cliente;
+    }
+
+    public String[][] reservar(String[][] cronograma, List<String>turnos, List<Servicios> listServicios){
+        Scanner entrada = new Scanner(System.in);
+        String [][] reserva = new String[20][3];
+        String otraReservaSoN;
+        Cliente cliente = cargarCliente();
+        int numFila = 0;
+        int numCol = 0;
+        int dia = 0;
+        int turno = 0;
+        Boolean isCorrectDate;
+        Boolean otraReserva = true;
+
+        do {
+            reserva[numFila][numCol] = cliente.getNombre() + " " + cliente.getApellido();
+            System.out.println("--------------------------------------------------------");
+            int numServicios = 1;
+
+            System.out.println("A continuación le mostraremos nuestros servicios disponibles");
+            for (Servicios servicios : listServicios){
+                System.out.println("Servicio N°" + numServicios);
+                servicios.mostrarServicio();
+                numServicios++;
+            }
+            System.out.println("Ingrese el número del servicio que desea reservar");
+            reserva[numFila][numCol + 1] = entrada.nextLine();
+
+            System.out.println("--------------------------------------------------------");
+            System.out.println("A continuación le mostraremos nuestros días y turnos disponibles");
+            mostrarTurnos(turnos, cronograma);
+
+
+            do {
+                isCorrectDate = true;
+                System.out.println("Ingrese el día deseado");
+                dia = Integer.parseInt(entrada.nextLine());
+
+                System.out.println("De los siguientes turnos, ingrese el número deseado");
+                for (int i = 0; i < turnos.stream().count(); i++) {
+                    System.out.println("N°" + (i + 1) + " " + turnos.get(i));
+                }
+                turno = Integer.parseInt(entrada.nextLine());
+
+                isCorrectDate = comprobarFechaTurno(dia - 1, turno - 1, cronograma);
+
+                if (isCorrectDate){
+                    System.out.println("El día y turno seleccionado ya estan reservado. Por favor ingrese otro día o turno");
+                }
+            }while (isCorrectDate);
+
+            System.out.println("Desea reservar otro turno o servicio? S/N");
+            otraReservaSoN = entrada.nextLine();
+            if (otraReservaSoN.toLowerCase() == "n"){
+                otraReserva = false;
+            }
+
+        }while(otraReserva);
+
+        entrada.close();
+
+        return reserva;
+    }
+
+    public boolean comprobarFechaTurno(int dia, int turno, String[][] cronograma){
+
+        if(cronograma[dia][turno] == "Reservado"){
+            return true;
+        }
+
+        return false;
     }
 }

@@ -4,6 +4,8 @@ import com.miempresa.integradorjava.modelo.Cliente;
 import com.miempresa.integradorjava.modelo.Turnos;
 import com.miempresa.integradorjava.servicio.Servicios;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -17,6 +19,7 @@ public class Main {
 
   public static void menu() {
     int opcion = 0;
+    List<Servicios> listServices = new ArrayList<>();
     Scanner entrada = new Scanner(System.in);
 
     // Crear instancias de la clase Servicios
@@ -26,6 +29,7 @@ public class Main {
             60,
             11500
     );
+    listServices.add(reflexologia);
 
     Servicios masajeDescontracturante = new Servicios(
             "Masaje descontracturante",
@@ -33,6 +37,7 @@ public class Main {
             60,
             21900
     );
+    listServices.add(masajeDescontracturante);
 
     Servicios pulidoCorporal = new Servicios(
             "Pulido corporal e hidratación",
@@ -40,6 +45,7 @@ public class Main {
             60,
             21900
     );
+    listServices.add(pulidoCorporal);
 
     // Imprimir el menú al inicio
     mostrarMenu();
