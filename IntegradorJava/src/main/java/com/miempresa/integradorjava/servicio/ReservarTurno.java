@@ -65,13 +65,13 @@ public class ReservarTurno {
         int cont1 = 0;
         List<String> dias = new ArrayList<>();
 
+        dias.add("Sab ");
+        dias.add("Dom ");
         dias.add("Lun ");
         dias.add("Mar ");
         dias.add("Mie ");
         dias.add("Jue ");
         dias.add("Vie ");
-        dias.add("Sab ");
-        dias.add("Dom ");
 
         System.out.println("");
         // Mostrar encabezados de horarios
@@ -136,6 +136,8 @@ public class ReservarTurno {
         String apellido;
         String correo;
         String telefono;
+        boolean isCorrectCorreo;
+        boolean isCorrectTelefono;
 
         Scanner entrada = new Scanner(System.in);
         System.out.println("--------------------------------------------------------");
@@ -143,20 +145,46 @@ public class ReservarTurno {
         System.out.println("\nIngrese su nombre: ");
         System.out.print("> ");
         nombre = entrada.next();
+
         System.out.println("Ingrese su apellido: ");
         System.out.print("> ");
         apellido = entrada.next();
-        System.out.println("Ingrese su correo: ");
-        System.out.print("> ");
-        correo = entrada.next();
-        System.out.println("Ingrese su telefono: ");
-        System.out.print("> ");
-        telefono = entrada.next();
+
+        do {
+            System.out.println("Ingrese su correo: ");
+            System.out.print("> ");
+            correo = entrada.next();
+            isCorrectCorreo = validarCorreo(correo);
+            if (!isCorrectCorreo){
+                System.out.println("El correo ingresado no es valido");
+            }
+        }while(!isCorrectCorreo);
+
+        do {
+            System.out.println("Ingrese su telefono: ");
+            System.out.print("> ");
+            telefono = entrada.next();
+            isCorrectTelefono = validarTelefono(telefono);
+            if (!isCorrectTelefono){
+                System.out.println("El número de teléfono es invalido");
+            }
+        }while (!isCorrectTelefono);
+
         System.out.println("--------------------------------------------------------");
 
         Cliente cliente = new Cliente(nombre, apellido, correo, telefono);
 
         return cliente;
+    }
+
+    public boolean validarCorreo(String correo){
+        String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+        return correo.matches(EMAIL_REGEX);
+    }
+
+    public boolean validarTelefono(String telefono){
+        String PHONE_REGEX = "^\\+?[0-9 ]{7,15}$";
+        return telefono.matches(PHONE_REGEX);
     }
 
     public String[][] reservar(List<Servicios> listServices) {
