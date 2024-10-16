@@ -1,5 +1,6 @@
 package com.miempresa.integradorjava.servicio;
 
+import com.miempresa.integradorjava.modelo.Cliente;
 import com.miempresa.integradorjava.modelo.Turnos;
 
 import java.util.ArrayList;
@@ -30,7 +31,6 @@ public class Servicios {
     //Esto significa que toda nueva instancia será a su vez agregada a la lista de tratamientos
     tratamientos.add(this);
   }
-
   //Getter
   public static List<Servicios> getTratamientos() {
     return tratamientos;
@@ -38,8 +38,8 @@ public class Servicios {
 
   @Override
   public String toString() {
-    final StringBuilder sb = new StringBuilder("Tratamiento " + index + ": ");
-    sb.append("Nombre: ").append(nombre).append('\'');
+    final StringBuilder sb = new StringBuilder("Tratamiento " + index + ": \n");
+    sb.append("\tNombre: ").append(nombre);
     sb.append(", Duracion: ").append(duracion);
     sb.append(", Precio: ").append(precio);
     sb.append(' ');
@@ -50,8 +50,9 @@ public class Servicios {
   public static void mostrarTratamientos(){
     for (Servicios tratamiento: tratamientos) {
       System.out.println(tratamiento);
-      System.out.println("¿Cómo desea continuar? ");
     }
+      System.out.println("¿Cómo desea continuar? ");
+      reservarTurno();
   }
 
   public static void reservarTurno(){
@@ -67,9 +68,15 @@ public class Servicios {
       //Se puede mostrar un calendario e ir seleccionando las fechas
       Servicios tratamientoElegido = tratamientos.get(opcion);
       //Crear nuevo Turno
-      //Modificar constructor Turno para que acepte solo la fecha y el tratamiento, en caso de no haber cliente
+      System.out.println("¡Ahora deberá ingresar sus datos!");
+      Cliente nuevoCliente = Cliente.pedirDatos();
+      System.out.println("¡Ahora deberá ingresar los datos de la reserva!");
+      Turnos fechaTurno = Turnos.elegirFecha();
+      Turnos nuevoTurno = new Turnos(nuevoCliente, fechaTurno, tratamientoElegido);
+      System.out.println(nuevoTurno);
+      System.out.println("----------");
+      Turnos.getTurnos();
       //Después agregar el nuevo turno a la lista
-
     }
   }
 }

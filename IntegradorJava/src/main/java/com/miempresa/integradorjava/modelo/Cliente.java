@@ -1,5 +1,7 @@
 package com.miempresa.integradorjava.modelo;
 
+import java.util.Scanner;
+
 public class Cliente {
   //Atributos
   private static int contador = 1;
@@ -7,16 +9,33 @@ public class Cliente {
   private String apellido;
   private final int ID;
   private String correo;
-  private String telefono;
+  private int telefono;
 
   //Constructor
-  public Cliente(String nombre, String apellido, String correo, String telefono){
+  public Cliente(String nombre, String apellido, String correo, int telefono){
     this.ID = contador++;
     this.nombre = nombre;
     this.apellido = apellido;
     this.correo = correo;
     this.telefono = telefono;
   }
+
+  public static Cliente pedirDatos(){
+    Scanner entrada = new Scanner(System.in);
+
+    System.out.print("Ingrese su nombre: ");
+    String nombre = entrada.nextLine();
+    System.out.print("Ingrese su apellido: ");
+    String apellido = entrada.nextLine();
+    System.out.print("Ingrese su teléfono: ");
+    int telefono = Integer.parseInt(entrada.nextLine());
+    System.out.print("Ingrese su correo: ");
+    String correo = entrada.nextLine();
+
+    return new Cliente(nombre, apellido, correo, telefono);
+  }
+
+
 
   //Getter & Setter
   public String getNombre() {
@@ -40,15 +59,15 @@ public class Cliente {
   public int getID() {
     return ID;
   }
-  public String getTelefono() {
-    return telefono;
-  }
-  public void setTelefono(String telefono) {
-    this.telefono = telefono;
-  }
 
   @Override
   public String toString() {
-    return "Cliente N:" + ID + "\nNombre: " + nombre + "\nApellido: " + apellido + "\nCorreo: " + correo + "\nTeléfono: " + telefono;
+    final StringBuilder sb = new StringBuilder("Cliente " + ID + ": \n");
+    sb.append("\t Nombre: ").append(nombre);
+    sb.append(", Apellido: ").append(apellido);
+    sb.append(", Correo: ").append(correo);
+    sb.append(", Telefono: ").append(telefono);
+    sb.append(' ');
+    return sb.toString();
   }
 }

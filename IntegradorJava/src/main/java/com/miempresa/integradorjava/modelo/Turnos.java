@@ -1,8 +1,11 @@
 package com.miempresa.integradorjava.modelo;
-import com.miempresa.integradorjava.modelo.Cliente;
+//import com.miempresa.integradorjava.modelo.Cliente;
+
+import com.miempresa.integradorjava.servicio.Servicios;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Turnos {
   //Atributos
@@ -11,55 +14,65 @@ public class Turnos {
   private int anio;
   private int hora;
   private Cliente cliente;
-  private static List<Turnos> listaTurnos = new ArrayList<>();
+  private Turnos turno;
+  private Servicios tratamiento;
+  private static List<Turnos> turnos = new ArrayList<>();
+
 
   //Constructor
-  public Turnos(int dia, int mes, int anio, int hora, Cliente cliente) {
+//  public Turnos(int dia, int mes, int anio, int hora, Cliente cliente) {
+//    this.dia = dia;
+//    this.mes = mes;
+//    this.anio = anio;
+//    this.hora = hora;
+//    this.cliente = cliente;
+//  }
+  public Turnos(int dia, int mes, int anio, int hora) {
     this.dia = dia;
     this.mes = mes;
     this.anio = anio;
     this.hora = hora;
+  }
+
+  public Turnos(Cliente cliente, Turnos turno, Servicios tratamiento){
     this.cliente = cliente;
+    this.hora = turno.hora;
+    this.dia = turno.dia;
+    this.mes = turno.mes;
+    this.anio = turno.anio;
+    this.tratamiento = tratamiento;
+    turnos.add(this);
   }
 
-  //Getter & Setter
-  public int getDia() {
-    return dia;
-  }
-  public void setDia(int dia) {
-    this.dia = dia;
-  }
-  public int getMes() {
-    return mes;
-  }
-  public void setMes(int mes) {
-    this.mes = mes;
-  }
-  public int getAnio() {
-    return anio;
-  }
-  public void setAnio(int anio) {
-    this.anio = anio;
-  }
-  public int getHora() {
-    return hora;
-  }
-  public void setHora(int hora) {
-    this.hora = hora;
-  }
-  public Cliente getCliente() {
-    return cliente;
+
+  public static Turnos elegirFecha(){
+    Scanner entrada = new Scanner(System.in);
+
+    System.out.println("Introduce el día del turno");
+    int dia = Integer.parseInt(entrada.nextLine());
+    System.out.println("Introduce el mes del turno");
+    int mes = Integer.parseInt(entrada.nextLine());
+    System.out.println("Introduce el año del turno");
+    int anio = Integer.parseInt(entrada.nextLine());
+    System.out.println("Introduce la hora del turno");
+    int hora = Integer.parseInt(entrada.nextLine());
+
+    return new Turnos(dia, mes, anio, hora);
   }
 
-  public static void setListaTurnos(List<Turnos> listaTurnos) {
-    Turnos.listaTurnos = listaTurnos;
+  public static List<Turnos> getTurnos() {
+    return turnos;
   }
 
   @Override
   public String toString() {
-    return "Fecha: " + dia+"/"+mes+"/"+anio+ "\nTurno: " + hora + "\nCliente: " + cliente;
+    final StringBuilder sb = new StringBuilder("Turno: \n");
+    sb.append("\t Fecha: ").append(dia).append('/').append(mes).append('/').append(anio).append(" Hora: ").append(hora);
+    sb.append("\n").append(cliente);
+    sb.append("\n").append(tratamiento);
+    sb.append(' ');
+    return sb.toString();
   }
-
 
   private static String[][] horarios = {
           {"Lun", "09:00 - 19:30"},
@@ -77,5 +90,3 @@ public class Turnos {
     }
   }
 }
-
-
