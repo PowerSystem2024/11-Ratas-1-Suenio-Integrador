@@ -1,5 +1,6 @@
 package com.miempresa.integradorjava;
 
+import com.miempresa.integradorjava.servicio.Contacto;
 import com.miempresa.integradorjava.servicio.ReservarTurno;
 import com.miempresa.integradorjava.servicio.Servicios;
 
@@ -77,7 +78,7 @@ public class Main {
                     break;
                 case 3:
                     // Contacto
-                    System.out.println("\nContacto:");
+                    Contacto.contacto();
                     break;
                 case 4:
                     // Mensaje de despedida
