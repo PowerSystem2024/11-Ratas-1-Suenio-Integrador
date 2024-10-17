@@ -60,13 +60,13 @@ public static void llamar() {
 }
 
 //Enviar correo
-public static void enviarCorreo(String nombre) {
-    pedirDatos(nombre);
+public static void enviarCorreo() {
+    pedirDatos();
     System.out.println("¡Mensaje enviado con éxito!");
-    menu(1, nombre);
+    menu();
 }
 
-public static void pedirDatos(String nombre) {
+public static void pedirDatos() {
     Scanner scanner = new Scanner(System.in);
     String tel, correo, mensaje;
 
@@ -87,8 +87,6 @@ public static void pedirDatos(String nombre) {
     
     // Simular envío de correo
     System.out.println("¡Mensaje enviado con éxito!");
-    // Agregar la lógica para enviar el correo
-    // Por ejemplo, utilizando una biblioteca como JavaMail
 }
 
 //Menu
