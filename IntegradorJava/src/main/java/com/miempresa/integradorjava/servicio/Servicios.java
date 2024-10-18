@@ -51,8 +51,18 @@ public class Servicios {
     for (Servicios tratamiento: tratamientos) {
       System.out.println(tratamiento);
     }
-      System.out.println("¿Cómo desea continuar? ");
-      reservarTurno();
+    Scanner entrada = new Scanner(System.in);
+    System.out.println("\n1. Hacer una reserva \n2. Volver al menú principal");
+    System.out.print("¿Cómo desea continuar? ");
+    int opcion;
+    do {
+      opcion = entrada.nextInt();
+    } while (opcion != 1 || opcion != 2);
+    if (opcion == 1){
+      Servicios.reservarTurno();
+    } else if (opcion == 2){
+      System.out.println("menu principal");
+    }
   }
 
   public static void reservarTurno(){
@@ -75,7 +85,7 @@ public class Servicios {
       Turnos nuevoTurno = new Turnos(nuevoCliente, fechaTurno, tratamientoElegido);
       System.out.println(nuevoTurno);
       System.out.println("----------");
-      Turnos.getTurnos();
+      System.out.println(Turnos.getTurnos());
       //Después agregar el nuevo turno a la lista
     }
   }
