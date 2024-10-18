@@ -20,7 +20,7 @@ public class ReservarTurno {
         turnos.add("   16:30   ");
         turnos.add("   18:00   ");
 
-        return turnos;
+        return turnos; 
     }
 
     public String[][] llenarMatrices() {
@@ -177,16 +177,16 @@ public class ReservarTurno {
         return cliente;
     }
 
-    public boolean validarCorreo(String correo){
+    public static boolean validarCorreo(String correo){
         String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
         return correo.matches(EMAIL_REGEX);
     }
 
-    public boolean validarTelefono(String telefono){
+    public static boolean validarTelefono(String telefono){
         String PHONE_REGEX = "^\\+?[0-9 ]{7,15}$";
         return telefono.matches(PHONE_REGEX);
     }
-
+ 
     public String[][] reservar(List<Servicios> listServices) {
         Scanner entrada = new Scanner(System.in);
         String[][] reserva = new String[20][3];
