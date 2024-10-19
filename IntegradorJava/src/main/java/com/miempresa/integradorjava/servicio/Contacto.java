@@ -1,17 +1,16 @@
 package com.miempresa.integradorjava.servicio;
-import com.miempresa.integradorjava.Main;
+
 import java.util.Scanner;
 
 public class Contacto {
-    
-    
+
     public static void contacto() {
         Scanner scanner = new Scanner(System.in);
         int opcion;
 
         // Mostrar menú de contacto
         System.out.println("===================================================");
-        System.out.println("                 >>  MENÚ DE CONTACTO  <<");
+        System.out.println("             >>  MENÚ DE CONTACTO  <<");
         System.out.println("===================================================");
         System.out.println("¡Estaremos encantados de atenderte!");
         horario();
@@ -37,98 +36,95 @@ public class Contacto {
                 enviarCorreo();
                 break;
             case 3:
-                Main.mostrarMenu();
                 break;
             default:
                 System.out.println("Opción inválida.");
+        }
     }
-}
 
-//Llamar
-public static void llamar() {
-    // Simulación de llamada
-    System.out.print("Llamando");
-    for (int i = 0; i < 3; i++) {
-        System.out.print(".");
+    //Llamar
+    public static void llamar() {
+        // Simulación de llamada
+        System.out.print("Llamando");
+        for (int i = 0; i < 3; i++) {
+            System.out.print(".");
+            try {
+                Thread.sleep(1000); // Esperar 1 segundo
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println("\nLlamada finalizada.");
+    }
+
+    //Enviar correo
+    public static void enviarCorreo() {
+        Scanner scanner = new Scanner(System.in);
+        String tel, correo, mensaje, nombre;
+
+        System.out.println("\n- Déjanos tus datos\n");
+
+        // Validaciones
+        do {
+            System.out.print("   Nombre completo: ");
+            nombre = scanner.nextLine();
+            if (nombre.length() <= 4) {
+                try {
+                    System.out.println("\n-- Ingrese un nombre válido (de más de 4 carácteres)--\n");
+                    Thread.sleep(1000); //Esperar 1 segundo.
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        } while (nombre.length() <= 4);
+
+        do {
+            System.out.print("   Teléfono: ");
+            tel = scanner.nextLine();
+        } while (!ReservarTurno.validarTelefono(tel));
+
+        do {
+            System.out.print("   Email: ");
+            correo = scanner.nextLine();
+        } while (!ReservarTurno.validarCorreo(correo));
+
+        do {
+            System.out.print("   Mensaje: ");
+            mensaje = scanner.nextLine();
+            if (mensaje.length() <= 5) {
+                try {
+                    System.out.println("\n-- Ingrese un mensaje válido (de más de 5 carácteres) --\n");
+                    Thread.sleep(1000); //Esperar 1 segundo.
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        } while (mensaje.length() <= 5);
+
         try {
-            Thread.sleep(1000); // Esperar 1 segundo
+            Thread.sleep(1000); //Esperar 1 segundo.
+            System.out.println("\n¡Mensaje enviado con éxito!");
+            Thread.sleep(500); //Esperar 1/2 segundo.
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
-    System.out.println("\nLlamada finalizada.");
-}
 
-//Enviar correo
-public static void enviarCorreo() {
-    pedirDatos();
-}
+    //Horario
+    public static void horario() {
+        String[][] horarios = {
+                {" Lun", "09:00 - 18:00"},
+                {" Mar", "09:00 - 18:00"},
+                {" Mié", "09:00 - 18:00"},
+                {" Jue", "09:00 - 18:00"},
+                {" Vie", "09:00 - 18:00"},
+                {" Sáb", "   CERRADO   "},
+                {" Dom", "   CERRADO   "}
+        };
 
-public static void pedirDatos() {
-    Scanner scanner = new Scanner(System.in);
-    String tel, correo, mensaje, nombre;
-
-    System.out.println("Déjanos tus datos");
- 
-    // Validaciones
-    do {
-        System.out.print("Nombre completo: ");
-        nombre = scanner.nextLine();
-    } while (nombre.length() <= 4);
-
-    do {
-        System.out.print("Teléfono: ");
-        tel = scanner.nextLine();
-    } while (!ReservarTurno.validarTelefono(tel));
-
-    do {
-        System.out.print("Email: ");
-        correo = scanner.nextLine();
-    }while (!ReservarTurno.validarCorreo(correo));
-    do {
-        System.out.print("Mensaje: ");
-        mensaje = scanner.nextLine();
-    }while (mensaje.length() <=  5); 
-
-    // Simular envío de correo
-    System.out.println("¡Mensaje enviado con éxito!");
-
-    try {
-        Thread.sleep(1000); //Esperar 1 segundo.
-        System.out.println("Mensaje enviado con exito!");
-    } catch (InterruptedException e) {
-        e.printStackTrace();
+        System.out.println("Horarios - Septiembre 2024");
+        for (String[] diaHorario : horarios) {
+            System.out.printf(" | %s: %s |\n", diaHorario[0], diaHorario[1]);
+        }
     }
-}
-
-//Menu
-public static void menu() {
-
-        System.out.println("\n¡Hola! Bienvenido a nuestro menú de servicio\n¿Cómo podemos ayudarte?\n");
-        System.out.println("                 >>  MENÚ  <<");
-        System.out.println("------------------------------------------------");
-        System.out.println(" (1)  Nuestros servicios");
-        System.out.println(" (2)  Reserva online");
-        System.out.println(" (3)  Contacto");
-        System.out.println(" (4)  Salir");
-   
-    }
-//Horario
-public static void horario() {
-    String[][] horarios = {
-            {"Lun", "09:00 - 19:30"},
-            {"Mar", "09:00 - 19:30"},
-            {"Mié", "09:00 - 19:30"},
-            {"Jue", "09:00 - 19:30"},
-            {"Vie", "09:00 - 19:30"},
-            {"Sáb", "      CERRADO"},
-            {"Dom", "      CERRADO"}
-    };
-
-    System.out.println("  Horarios - Julio 2024");
-    for (String[] diaHorario : horarios) {
-        System.out.printf(" | %s: %s |\n", diaHorario[0], diaHorario[1]);
-    }
-}
-
 }

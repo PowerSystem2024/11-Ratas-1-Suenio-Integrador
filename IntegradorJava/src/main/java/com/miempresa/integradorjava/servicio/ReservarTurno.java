@@ -20,7 +20,7 @@ public class ReservarTurno {
         turnos.add("   16:30   ");
         turnos.add("   18:00   ");
 
-        return turnos; 
+        return turnos;
     }
 
     public String[][] llenarMatrices() {
@@ -74,15 +74,18 @@ public class ReservarTurno {
         dias.add("Vie ");
 
         System.out.println("");
+        System.out.println("                                                  ___________________");
+        System.out.println("                                                 | Septiembre / 2024 |");
+        System.out.println("       ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯");
         // Mostrar encabezados de horarios
-        System.out.println("       | " + turnos.get(0) + " || " + turnos.get(1) + " || " + turnos.get(2) + " || " + turnos.get(3) + " || " + turnos.get(4) + " || " + turnos.get(5) + " || " + turnos.get(6) + " |");
+        System.out.println("Día\\Hs | " + turnos.get(0) + " || " + turnos.get(1) + " || " + turnos.get(2) + " || " + turnos.get(3) + " || " + turnos.get(4) + " || " + turnos.get(5) + " || " + turnos.get(6) + " |");
         for (int i = 0; i < numDias; i++) {
             for (int k = cont1; k < dias.size(); k++) {
                 for (int j = 0; j < numTurnos; j++) {
                     if (cont == 0) {
                         System.out.print("       ");
                     }
-                    System.out.print("_______________");
+                    System.out.print("¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯");
                     cont++;
                 }
 
@@ -116,7 +119,7 @@ public class ReservarTurno {
                         if (cont == 0) {
                             System.out.print("       ");
                         }
-                        System.out.print("_______________");
+                        System.out.print("¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯");
                         cont++;
                     }
                 }
@@ -155,20 +158,14 @@ public class ReservarTurno {
             System.out.print("> ");
             correo = entrada.next();
             isCorrectCorreo = validarCorreo(correo);
-            if (!isCorrectCorreo){
-                System.out.println("El correo ingresado no es valido");
-            }
-        }while(!isCorrectCorreo);
+        } while (!isCorrectCorreo);
 
         do {
             System.out.println("Ingrese su telefono: ");
             System.out.print("> ");
             telefono = entrada.next();
             isCorrectTelefono = validarTelefono(telefono);
-            if (!isCorrectTelefono){
-                System.out.println("El número de teléfono es invalido");
-            }
-        }while (!isCorrectTelefono);
+        } while (!isCorrectTelefono);
 
         System.out.println("--------------------------------------------------------");
 
@@ -177,16 +174,44 @@ public class ReservarTurno {
         return cliente;
     }
 
-    public static boolean validarCorreo(String correo){
+    public static boolean validarCorreo(String correo) {
         String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+
+        if (!correo.matches(EMAIL_REGEX)) {
+            try {
+                System.out.println("\n-- El correo ingresado no es valido --\n");
+                Thread.sleep(1000); //Esperar 1 segundo.
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         return correo.matches(EMAIL_REGEX);
     }
 
-    public static boolean validarTelefono(String telefono){
+    public static boolean validarTelefono(String telefono) {
         String PHONE_REGEX = "^\\+?[0-9 ]{7,15}$";
+
+        if (!telefono.matches(PHONE_REGEX)) {
+            try {
+                System.out.println("\n-- El número de teléfono es invalido --\n");
+                Thread.sleep(1000); //Esperar 1 segundo.
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         return telefono.matches(PHONE_REGEX);
     }
- 
+
+    public static boolean validarDiaCerrado(int dia, String[][] cronograma) {
+        boolean valid = false;
+        for (int i = 0; i < 7; i++) {
+            if (cronograma[dia][i] == "   Cerrado   ") {
+                valid = true;
+            }
+        }
+        return valid;
+    }
+
     public String[][] reservar(List<Servicios> listServices) {
         Scanner entrada = new Scanner(System.in);
         String[][] reserva = new String[20][3];
@@ -200,10 +225,10 @@ public class ReservarTurno {
         int numCol = 0;
         int dia = 0;
         int turno = 0;
-        int numServicio = 0;
 
         Boolean isCorrectDate;
         Boolean otraReserva = true;
+        Boolean diaCerrado = false;
 
         do {
             reserva[numFila][numCol] = cliente.getNombre() + " " + cliente.getApellido();
@@ -221,7 +246,12 @@ public class ReservarTurno {
                 System.out.print("> ");
                 reserva[numFila][numCol + 1] = entrada.next();
                 if (!reserva[numFila][numCol + 1].equals("1") && !reserva[numFila][numCol + 1].equals("2") && !reserva[numFila][numCol + 1].equals("3")) {
-                    System.out.println("\n--- ¡¡Ingrese bien la opción!! ---\n");
+                    try {
+                        System.out.println("\n--- ¡¡Ingrese bien la opción!! ---\n");
+                        Thread.sleep(1000); //Esperar 1 segundo.
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
                 numServicios = 1;
             } while (!reserva[numFila][numCol + 1].equals("1") && !reserva[numFila][numCol + 1].equals("2") && !reserva[numFila][numCol + 1].equals("3"));
@@ -230,11 +260,22 @@ public class ReservarTurno {
             System.out.println("A continuación le mostraremos nuestros días y turnos disponibles");
 
             do {
-                mostrarTurnos(turnos, cronograma);
-                isCorrectDate = true;
-                System.out.println("\nIngrese el número de día deseado");
-                System.out.print("> ");
-                dia = Integer.parseInt(entrada.next());
+                do {
+                    mostrarTurnos(turnos, cronograma);
+                    isCorrectDate = true;
+                    System.out.println("\nIngrese el número de día deseado");
+                    System.out.print("> ");
+                    dia = Integer.parseInt(entrada.next());
+                    diaCerrado = validarDiaCerrado(dia - 1, cronograma);
+                    if (diaCerrado) {
+                        try {
+                            System.out.println("\n--- El día '" + dia + "' el establecimiento está cerrado. Por favor ingrese otro día ---");
+                            Thread.sleep(1500); //Esperar 1.5 segundos.
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                } while (diaCerrado);
 
                 System.out.println("\nDe los siguientes turnos, ingrese el número deseado:");
                 for (int i = 0; i < turnos.stream().count(); i++) {
@@ -255,7 +296,21 @@ public class ReservarTurno {
             }
 
         } while (otraReserva);
-        System.out.println("\nSu reserva ya fue recibida!!");
+
+        try {
+            Thread.sleep(1000); //Esperar 1 segundo.
+            System.out.println("\nSu reserva ya fue recibida!!");
+            Thread.sleep(500); //Esperar 1/2 segundo.
+            System.out.println("\n- Datos de la reserva realizada:");
+            System.out.println("\n  > A nombre de: '" + cliente.getApellido() + " " + cliente.getNombre() + "'");
+            System.out.println("\n  > Día y turno: '" + dia + "', " + turnos.get(turno - 1).replace(" ", ""));
+            System.out.println("\n- Datos de contactos del cliente:");
+            System.out.println("\n  > Teléfono: '" + cliente.getTelefono() + "'");
+            System.out.println("\n  > Correo: '" + cliente.getCorreo() + "'");
+            Thread.sleep(2000); //Esperar 2 segundos.
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         return reserva;
     }
@@ -263,10 +318,12 @@ public class ReservarTurno {
     public boolean comprobarFechaTurno(int dia, int turno, String[][] cronograma) {
 
         if (cronograma[dia][turno] == "  Reservado  ") {
-            System.out.println("\n--- El día y turno seleccionado ya estan reservado. Por favor ingrese otro día o turno ---");
-            return true;
-        } else if (cronograma[dia][turno] == "   Cerrado   ") {
-            System.out.println("\n--- El día seleccionado el establecimiento está cerrado. Por favor ingrese otro día ---");
+            try {
+                System.out.println("\n--- El día y turno seleccionado ya estan reservado. Por favor ingrese otro día o turno ---");
+                Thread.sleep(1500); //Esperar 1.5 segundos.
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             return true;
         } else {
             cronograma[dia][turno] = "  Reservado  ";
