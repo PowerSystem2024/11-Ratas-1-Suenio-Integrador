@@ -35,7 +35,13 @@ public class Servicios {
   public static List<Servicios> getTratamientos() {
     return tratamientos;
   }
-
+  public static Servicios getTratamientos(int indice) {
+    if (indice >= 0 && indice < tratamientos.size()) {
+      return tratamientos.get(indice);
+    } else {
+      throw new IndexOutOfBoundsException("Índice fuera de rango.");
+    }
+  }
   @Override
   public String toString() {
     final StringBuilder sb = new StringBuilder("Tratamiento " + index + ": \n");
@@ -53,16 +59,23 @@ public class Servicios {
     }
     Scanner entrada = new Scanner(System.in);
     System.out.println("\n1. Hacer una reserva \n2. Volver al menú principal");
-    System.out.print("¿Cómo desea continuar? ");
     int opcion;
     do {
+      System.out.print("¿Cómo desea continuar? ");
       opcion = entrada.nextInt();
-    } while (opcion != 1 || opcion != 2);
+    } while (opcion != 1 && opcion != 2);
     if (opcion == 1){
-      Servicios.reservarTurno();
+//      Servicios.reservarTurno();
+      ReservarTurno1.reservar(Servicios.getTratamientos());
     } else if (opcion == 2){
-      System.out.println("menu principal");
+//      System.out.println("menu principal");
+      Menu.menu();
     }
+  }
+
+  public static void main(String[] args) {
+//    mostrarTratamientos();
+    System.out.println(Servicios.getTratamientos(2));
   }
 
   public static void reservarTurno(){
@@ -86,7 +99,11 @@ public class Servicios {
       System.out.println(nuevoTurno);
       System.out.println("----------");
       System.out.println(Turnos.getTurnos());
-      //Después agregar el nuevo turno a la lista
+
+      //Mi idea era intentar hacerlo lo más conciso y ordenado posible, aprovechando la creación de instancias y
+      //los atributos/métodos estáticos.
+      //Claro, si es posible xD
+      //Hay cosas que están mezcladas, y que debemos borrar.
     }
   }
 }

@@ -9,10 +9,10 @@ public class Cliente {
   private String apellido;
   private final int ID;
   private String correo;
-  private int telefono;
+  private String telefono;
 
   //Constructor
-  public Cliente(String nombre, String apellido, String correo, int telefono){
+  public Cliente(String nombre, String apellido, String correo, String telefono){
     this.ID = contador++;
     this.nombre = nombre;
     this.apellido = apellido;
@@ -28,7 +28,8 @@ public class Cliente {
     System.out.print("Ingrese su apellido: ");
     String apellido = entrada.nextLine();
     System.out.print("Ingrese su teléfono: ");
-    int telefono = Integer.parseInt(entrada.nextLine());
+//    int telefono = Integer.parseInt(entrada.nextLine());
+    String telefono = entrada.nextLine();
     System.out.print("Ingrese su correo: ");
     String correo = entrada.nextLine();
 

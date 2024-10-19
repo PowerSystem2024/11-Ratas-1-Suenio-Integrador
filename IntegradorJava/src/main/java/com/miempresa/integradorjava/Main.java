@@ -6,7 +6,6 @@ import com.miempresa.integradorjava.servicio.Servicios;
 
 import static com.miempresa.integradorjava.servicio.Menu.menu;
 //import static com.miempresa.integradorjava.servicio.Servicios.mostrarTratamientos;
-import java.util.Scanner;
 
 
 public class Main {
@@ -17,15 +16,16 @@ public class Main {
 
     menu();
 
-//    Cliente cliente = new Cliente("Chris", "Bonilla", "chris@gmail.com", 232342422);
+    //El main principal solo tiene el título y la llamada a menú.
+
+    //Descomentar para ver el ejemplo del turno.
+//    Cliente cliente = new Cliente("Chris", "Bonilla", "chris@gmail.com", "23234422");
 //    Turnos turno = new Turnos(2, 3, 2024, 18);
 //    Servicios servicio = new Servicios("masaje", 20, 2000);
 //    Turnos nuevoTurno = new Turnos(cliente, turno, servicio);
+
+    //Tenía pensado que los turnos se mostraran así (nuevoTurno)
 //    System.out.println(nuevoTurno);
-//    System.out.println(Turnos.getTurnos());
-
-
-
   }
 }
 

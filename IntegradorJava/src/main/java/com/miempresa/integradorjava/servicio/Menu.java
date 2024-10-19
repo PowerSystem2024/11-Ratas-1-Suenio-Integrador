@@ -13,7 +13,7 @@ public class Menu {
       System.out.println("------------------------------------------------");
       System.out.println(" (1)  Nuestros servicios");
       System.out.println(" (2)  Reserva online");
-      System.out.println(" (3)  Contacto\n\n");
+      System.out.println(" (3)  Contacto\n");
       System.out.println(" (4)  Salir");
       System.out.println("------------------------------------------------");
       System.out.println();
@@ -28,16 +28,19 @@ public class Menu {
         }
         case 2 ->
           // Reserva online
-                System.out.println("2");
+//                System.out.println("2");
+                ReservarTurno1.reservar(Servicios.getTratamientos());
         case 3 ->
           // Contacto
-                System.out.println("3");
+                Contacto.contacto();
         case 4 ->
           // Mensaje de despedida
-                System.out.println("4");
+                System.out.println("Gracias por usar nuestros servicios");
         default -> System.out.println("Opción no válida. Inténtalo de nuevo.");
       }
     }
     entrada.close();
   }
 }
+
+// La idea de que menu() tenga el switch y el while dentro, es para que su referencia en otros contextos no dependa de nada más.
