@@ -28,15 +28,16 @@ public class Menu {
         }
         case 2 ->
           // Reserva online
-//                System.out.println("2");
-                ReservarTurno1.reservar(Servicios.getTratamientos());
+//              System.out.println("2");
+                Servicios.reservarTurno();
+//                ReservarTurno1.reservar(Servicios.getTratamientos());
         case 3 ->
           // Contacto
                 Contacto.contacto();
         case 4 ->
-          // Mensaje de despedida
                 System.out.println("Gracias por usar nuestros servicios");
-        default -> System.out.println("Opción no válida. Inténtalo de nuevo.");
+        default ->
+                System.out.println("Opción no válida. Inténtalo de nuevo.");
       }
     }
     entrada.close();

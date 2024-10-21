@@ -10,9 +10,9 @@ import java.util.Scanner;
 public class Turnos {
   //Atributos
   private int dia;
-  private int mes;
-  private int anio;
-  private int hora;
+//  private int mes;
+//  private int anio;
+  private String hora;
   private Cliente cliente;
   private Turnos turno;
   private Servicios tratamiento;
@@ -27,19 +27,25 @@ public class Turnos {
 //    this.hora = hora;
 //    this.cliente = cliente;
 //  }
-  public Turnos(int dia, int mes, int anio, int hora) {
+//  public Turnos(int dia, int mes, int anio, int hora) {
+//    this.dia = dia;
+//    this.mes = mes;
+//    this.anio = anio;
+//    this.hora = hora;
+//  }
+  public Turnos(int dia, String hora) {
     this.dia = dia;
-    this.mes = mes;
-    this.anio = anio;
     this.hora = hora;
   }
 
-  public Turnos(Cliente cliente, Turnos turno, Servicios tratamiento){
+  public Turnos(Cliente cliente, int dia, String hora, Servicios tratamiento){
     this.cliente = cliente;
-    this.hora = turno.hora;
-    this.dia = turno.dia;
-    this.mes = turno.mes;
-    this.anio = turno.anio;
+//    this.hora = turno.hora;
+//    this.dia = turno.dia;
+    this.hora = hora;
+    this.dia = dia;
+//    this.mes = turno.mes;
+//    this.anio = turno.anio;
     this.tratamiento = tratamiento;
     turnos.add(this);
   }
@@ -55,9 +61,10 @@ public class Turnos {
     System.out.println("Introduce el año del turno");
     int anio = Integer.parseInt(entrada.nextLine());
     System.out.println("Introduce la hora del turno");
-    int hora = Integer.parseInt(entrada.nextLine());
+    String hora = entrada.nextLine();
 
-    return new Turnos(dia, mes, anio, hora);
+//    return new Turnos(dia, mes, anio, hora);
+    return new Turnos(dia, hora);
   }
 
   public static List<Turnos> getTurnos() {
@@ -67,7 +74,7 @@ public class Turnos {
   @Override
   public String toString() {
     final StringBuilder sb = new StringBuilder("Turno: \n");
-    sb.append("\t Fecha: ").append(dia).append('/').append(mes).append('/').append(anio).append(" Hora: ").append(hora);
+    sb.append("\t Fecha: ").append(dia).append('/').append("10").append('/').append("2024").append(" Hora: ").append(hora.trim());
     sb.append("\n").append(cliente);
     sb.append("\n").append(tratamiento);
     sb.append(' ');

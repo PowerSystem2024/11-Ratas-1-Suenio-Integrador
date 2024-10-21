@@ -39,7 +39,7 @@ public class Servicios {
     if (indice >= 0 && indice < tratamientos.size()) {
       return tratamientos.get(indice);
     } else {
-      throw new IndexOutOfBoundsException("Índice fuera de rango.");
+      throw new IndexOutOfBoundsException("Índice fuera de rangoo.");
     }
   }
   @Override
@@ -65,8 +65,8 @@ public class Servicios {
       opcion = entrada.nextInt();
     } while (opcion != 1 && opcion != 2);
     if (opcion == 1){
-//      Servicios.reservarTurno();
-      ReservarTurno1.reservar(Servicios.getTratamientos());
+      Servicios.reservarTurno();
+//      ReservarTurno1.reservar(Servicios.getTratamientos());
     } else if (opcion == 2){
 //      System.out.println("menu principal");
       Menu.menu();
@@ -75,35 +75,67 @@ public class Servicios {
 
   public static void main(String[] args) {
 //    mostrarTratamientos();
-    System.out.println(Servicios.getTratamientos(2));
+//    System.out.println(Servicios.getTratamientos(2));
+    Servicios.reservarTurno();
   }
 
-  public static void reservarTurno(){
-    System.out.println("Nuestros horarios");
-    Turnos.mostrarHorarios();
-    System.out.println();
+  public static void reservarTurno() {
     Scanner entrada = new Scanner(System.in);
-    int opcion;
-    System.out.print("Elige el tratamiento deseado: ");
-    opcion = Integer.parseInt(entrada.nextLine());
 
-    if (opcion >= 0 && opcion < tratamientos.size()){
-      //Se puede mostrar un calendario e ir seleccionando las fechas
-      Servicios tratamientoElegido = tratamientos.get(opcion);
-      //Crear nuevo Turno
-      System.out.println("¡Ahora deberá ingresar sus datos!");
+    System.out.println("Primero elegí uno de los siguientes tratamientos");
+    //Iteramos la lista de tratamientos
+    for (Servicios tratamiento : Servicios.getTratamientos()) {
+      System.out.println(tratamiento);
+    }
+    int tratamientoIndice;
+    do {
+      System.out.print("> ");
+      tratamientoIndice = Integer.parseInt(entrada.nextLine());
+    } while (tratamientoIndice <= 0 || tratamientoIndice > Servicios.getTratamientos().size()); //Verificamos que el tratamiento esté en la lista
+    //Si está dentro de la lista, se guarda.
+    Servicios tratamientoElegido = Servicios.getTratamientos((tratamientoIndice) - 1);
+
+    System.out.println();
+    System.out.println("Ahora elegiremos la fecha\n¡Se le mostrarán los turnos disponibles!");
+    String[][] cronograma = ReservarTurno1.llenarMatrices();
+    List<String> turnos = ReservarTurno1.cargarTurnos();
+    String seguirReservando;
+    boolean continuaReservando = true;
+    do {
+      int i = 1, dia, turnoHora;
+      ReservarTurno1.mostrarTurnos(turnos, cronograma);
+      System.out.println();
+      do {
+        System.out.print("\nIngrese el día de su reserva: ");
+        dia = Integer.parseInt(entrada.nextLine());
+        for (String turno : turnos) {
+          System.out.println(i + ": " + turno.trim());
+          i++;
+        }
+        System.out.print("\nIngrese la hora de su reserva: ");
+        turnoHora = Integer.parseInt(entrada.nextLine());
+
+      } while (ReservarTurno1.comprobarFechaTurno(dia - 1, turnoHora - 1, cronograma));
+      System.out.println("\nAhora deberá ingresar sus datos personales");
       Cliente nuevoCliente = Cliente.pedirDatos();
-      System.out.println("¡Ahora deberá ingresar los datos de la reserva!");
-      Turnos fechaTurno = Turnos.elegirFecha();
-      Turnos nuevoTurno = new Turnos(nuevoCliente, fechaTurno, tratamientoElegido);
-      System.out.println(nuevoTurno);
-      System.out.println("----------");
-      System.out.println(Turnos.getTurnos());
+      Turnos nuevoTurno = new Turnos(nuevoCliente, dia, turnos.get(turnoHora), tratamientoElegido);
+      System.out.println("\nReserva registrada:\n" + nuevoTurno);
+
+      System.out.println("\nDesea reservar otro turno o servicio? S/N");
+      do {
+        System.out.print("> ");
+        seguirReservando = entrada.nextLine();
+      } while (!seguirReservando.equalsIgnoreCase("s") && !seguirReservando.equalsIgnoreCase("n"));
+      if (seguirReservando.equalsIgnoreCase("n")){
+        continuaReservando = false;
+      }
+    } while (continuaReservando);
+    System.out.println("\nGracias por usar nuestros servicios");
+  }
+}
 
       //Mi idea era intentar hacerlo lo más conciso y ordenado posible, aprovechando la creación de instancias y
       //los atributos/métodos estáticos.
       //Claro, si es posible xD
       //Hay cosas que están mezcladas, y que debemos borrar.
-    }
-  }
-}
+
