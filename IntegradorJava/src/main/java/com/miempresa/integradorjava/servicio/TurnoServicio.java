@@ -106,28 +106,30 @@ public class TurnoServicio {
 
   public static void reservarTurno() {
     Scanner entrada = new Scanner(System.in);
-    Utilidades.encabezado("Reserva Online");
 
-    System.out.println("+ Ingresa uno de los siguientes tratamientos\n");
-    //Iteramos la lista de tratamientos
-    for (Tratamiento tratamiento : Tratamiento.getTratamientos()) {
-      System.out.println(tratamiento);
-    }
-
-    int tratamientoIndice;
+    boolean continuaReservando;
     do {
-      System.out.print("> ");
-      tratamientoIndice = Integer.parseInt(entrada.nextLine());
-    } while (tratamientoIndice <= 0 || tratamientoIndice > Tratamiento.getTratamientos().size());
-    Tratamiento tratamientoElegido = Tratamiento.getTratamientos((tratamientoIndice) - 1);
-    System.out.println();
-    System.out.println("+ Ingresa la fecha\n¡A continuación se le mostrarán los turnos disponibles!");
+      Utilidades.encabezado("Reserva Online");
+      System.out.println("+ Ingresa uno de los siguientes tratamientos\n");
+      //Iteramos la lista de tratamientos
+      for (Tratamiento tratamiento : Tratamiento.getTratamientos()) {
+        System.out.println(tratamiento);
+      }
 
-    String[][] cronograma = llenarMatrices();
-    List<String> turnos = cargarTurnos();
-    String seguirReservando;
-    boolean continuaReservando = true;
-    do {
+      int tratamientoIndice;
+      continuaReservando = true;
+      do {
+        System.out.print("> ");
+        tratamientoIndice = Integer.parseInt(entrada.nextLine());
+      } while (tratamientoIndice <= 0 || tratamientoIndice > Tratamiento.getTratamientos().size());
+      Tratamiento tratamientoElegido = Tratamiento.getTratamientos((tratamientoIndice) - 1);
+      System.out.println();
+      System.out.println("+ Ingresa la fecha\n¡A continuación se le mostrarán los turnos disponibles!");
+
+      String[][] cronograma = llenarMatrices();
+      List<String> turnos = cargarTurnos();
+      String seguirReservando;
+
       int dia, turnoHora;
       TurnoServicio.mostrarTurnos(turnos, cronograma);
       System.out.println();
@@ -153,16 +155,16 @@ public class TurnoServicio {
         System.out.print("> ");
         seguirReservando = entrada.nextLine();
       } while (!seguirReservando.equalsIgnoreCase("s") && !seguirReservando.equalsIgnoreCase("n"));
-      if (seguirReservando.equalsIgnoreCase("n")){
+      if (seguirReservando.equalsIgnoreCase("n")) {
         continuaReservando = false;
       }
     } while (continuaReservando);
     System.out.println("\n¡Gracias por elegirnos!");
-    try{
+    try {
       Thread.sleep(1000);
       System.out.println("\nVolviendo al menú principal...");
       Thread.sleep(1000);
-    }catch (InterruptedException e) {
+    } catch (InterruptedException e) {
       e.printStackTrace();
     }
   }
