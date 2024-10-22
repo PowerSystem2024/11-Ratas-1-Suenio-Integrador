@@ -1,41 +1,41 @@
-package com.miempresa.integradorjava.servicio;
+package com.miempresa.integradorjava.modelo;
 
-import com.miempresa.integradorjava.modelo.Cliente;
-import com.miempresa.integradorjava.modelo.Turnos;
+import com.miempresa.integradorjava.servicio.ReservarTurno1;
+import com.miempresa.integradorjava.util.Menu;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Servicios {
+public class Tratamiento {
   private String nombre;
   private int duracion;
   private double precio;
   private int index = 1;
   private static int contadorIndex;
-  private static List<Servicios> tratamientos = new ArrayList<>();
+  private static List<Tratamiento> tratamientos = new ArrayList<>();
 
   //En un bloque estático podremos inicializar instancias predefinidas que pertenezcan a la clase
   static {
-    new Servicios("Masaje Relajante", 60, 7000);
-    new Servicios("Terapia Facial", 60, 10000);
-    new Servicios("Depilación Láser", 60, 23000);
+    new Tratamiento("Masaje Relajante", 60, 7000);
+    new Tratamiento("Terapia Facial", 60, 10000);
+    new Tratamiento("Depilación Láser", 60, 23000);
   }
 
   //Constructor
-  public Servicios(String nombre, int duracion, double precio) {
+  public Tratamiento(String nombre, int duracion, double precio) {
     this.nombre = nombre;
     this.duracion = duracion;
     this.precio = precio;
-    this.index = ++Servicios.contadorIndex;
+    this.index = ++Tratamiento.contadorIndex;
     //Esto significa que toda nueva instancia será a su vez agregada a la lista de tratamientos
     tratamientos.add(this);
   }
   //Getter
-  public static List<Servicios> getTratamientos() {
+  public static List<Tratamiento> getTratamientos() {
     return tratamientos;
   }
-  public static Servicios getTratamientos(int indice) {
+  public static Tratamiento getTratamientos(int indice) {
     if (indice >= 0 && indice < tratamientos.size()) {
       return tratamientos.get(indice);
     } else {
@@ -54,7 +54,7 @@ public class Servicios {
 
   //Métodos
   public static void mostrarTratamientos(){
-    for (Servicios tratamiento: tratamientos) {
+    for (Tratamiento tratamiento: tratamientos) {
       System.out.println(tratamiento);
     }
     Scanner entrada = new Scanner(System.in);
@@ -65,7 +65,7 @@ public class Servicios {
       opcion = entrada.nextInt();
     } while (opcion != 1 && opcion != 2);
     if (opcion == 1){
-      Servicios.reservarTurno();
+      Tratamiento.reservarTurno();
 //      ReservarTurno1.reservar(Servicios.getTratamientos());
     } else if (opcion == 2){
 //      System.out.println("menu principal");
@@ -76,7 +76,7 @@ public class Servicios {
   public static void main(String[] args) {
 //    mostrarTratamientos();
 //    System.out.println(Servicios.getTratamientos(2));
-    Servicios.reservarTurno();
+    Tratamiento.reservarTurno();
   }
 
   public static void reservarTurno() {
@@ -84,16 +84,16 @@ public class Servicios {
 
     System.out.println("Primero elegí uno de los siguientes tratamientos");
     //Iteramos la lista de tratamientos
-    for (Servicios tratamiento : Servicios.getTratamientos()) {
+    for (Tratamiento tratamiento : Tratamiento.getTratamientos()) {
       System.out.println(tratamiento);
     }
     int tratamientoIndice;
     do {
       System.out.print("> ");
       tratamientoIndice = Integer.parseInt(entrada.nextLine());
-    } while (tratamientoIndice <= 0 || tratamientoIndice > Servicios.getTratamientos().size()); //Verificamos que el tratamiento esté en la lista
+    } while (tratamientoIndice <= 0 || tratamientoIndice > Tratamiento.getTratamientos().size()); //Verificamos que el tratamiento esté en la lista
     //Si está dentro de la lista, se guarda.
-    Servicios tratamientoElegido = Servicios.getTratamientos((tratamientoIndice) - 1);
+    Tratamiento tratamientoElegido = Tratamiento.getTratamientos((tratamientoIndice) - 1);
 
     System.out.println();
     System.out.println("Ahora elegiremos la fecha\n¡Se le mostrarán los turnos disponibles!");
@@ -118,7 +118,7 @@ public class Servicios {
       } while (ReservarTurno1.comprobarFechaTurno(dia - 1, turnoHora - 1, cronograma));
       System.out.println("\nAhora deberá ingresar sus datos personales");
       Cliente nuevoCliente = Cliente.pedirDatos();
-      Turnos nuevoTurno = new Turnos(nuevoCliente, dia, turnos.get(turnoHora), tratamientoElegido);
+      Turno nuevoTurno = new Turno(nuevoCliente, dia, turnos.get(turnoHora), tratamientoElegido);
       System.out.println("\nReserva registrada:\n" + nuevoTurno);
 
       System.out.println("\nDesea reservar otro turno o servicio? S/N");

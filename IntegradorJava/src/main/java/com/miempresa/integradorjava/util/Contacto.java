@@ -1,4 +1,7 @@
-package com.miempresa.integradorjava.servicio;
+package com.miempresa.integradorjava.util;
+import com.miempresa.integradorjava.servicio.ReservarTurno1;
+import com.miempresa.integradorjava.util.Menu;
+
 import java.util.Scanner;
 
 public class Contacto {

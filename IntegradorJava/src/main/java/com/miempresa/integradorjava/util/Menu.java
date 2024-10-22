@@ -1,5 +1,7 @@
-package com.miempresa.integradorjava.servicio;
-import static com.miempresa.integradorjava.servicio.Servicios.mostrarTratamientos;
+package com.miempresa.integradorjava.util;
+import com.miempresa.integradorjava.modelo.Tratamiento;
+
+import static com.miempresa.integradorjava.modelo.Tratamiento.mostrarTratamientos;
 import java.util.Scanner;
 
 public class Menu {
@@ -29,7 +31,7 @@ public class Menu {
         case 2 ->
           // Reserva online
 //              System.out.println("2");
-                Servicios.reservarTurno();
+                Tratamiento.reservarTurno();
 //                ReservarTurno1.reservar(Servicios.getTratamientos());
         case 3 ->
           // Contacto

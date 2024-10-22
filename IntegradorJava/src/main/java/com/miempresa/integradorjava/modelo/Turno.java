@@ -1,22 +1,20 @@
 package com.miempresa.integradorjava.modelo;
 //import com.miempresa.integradorjava.modelo.Cliente;
 
-import com.miempresa.integradorjava.servicio.Servicios;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Turnos {
+public class Turno {
   //Atributos
   private int dia;
 //  private int mes;
 //  private int anio;
   private String hora;
   private Cliente cliente;
-  private Turnos turno;
-  private Servicios tratamiento;
-  private static List<Turnos> turnos = new ArrayList<>();
+  private Turno turno;
+  private Tratamiento tratamiento;
+  private static List<Turno> turnos = new ArrayList<>();
 
 
   //Constructor
@@ -33,12 +31,12 @@ public class Turnos {
 //    this.anio = anio;
 //    this.hora = hora;
 //  }
-  public Turnos(int dia, String hora) {
+  public Turno(int dia, String hora) {
     this.dia = dia;
     this.hora = hora;
   }
 
-  public Turnos(Cliente cliente, int dia, String hora, Servicios tratamiento){
+  public Turno(Cliente cliente, int dia, String hora, Tratamiento tratamiento){
     this.cliente = cliente;
 //    this.hora = turno.hora;
 //    this.dia = turno.dia;
@@ -51,7 +49,7 @@ public class Turnos {
   }
 
 
-  public static Turnos elegirFecha(){
+  public static Turno elegirFecha(){
     Scanner entrada = new Scanner(System.in);
 
     System.out.println("Introduce el día del turno");
@@ -64,10 +62,10 @@ public class Turnos {
     String hora = entrada.nextLine();
 
 //    return new Turnos(dia, mes, anio, hora);
-    return new Turnos(dia, hora);
+    return new Turno(dia, hora);
   }
 
-  public static List<Turnos> getTurnos() {
+  public static List<Turno> getTurnos() {
     return turnos;
   }
 

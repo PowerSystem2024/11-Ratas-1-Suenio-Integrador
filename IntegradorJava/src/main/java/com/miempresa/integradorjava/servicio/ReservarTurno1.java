@@ -1,7 +1,7 @@
 package com.miempresa.integradorjava.servicio;
 
 import com.miempresa.integradorjava.modelo.Cliente;
-import com.miempresa.integradorjava.modelo.Turnos;
+import com.miempresa.integradorjava.modelo.Tratamiento;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +61,7 @@ public class ReservarTurno1 {
 
     public static void main(String[] args) {
 //        System.out.println(Turnos.getTurnos());
-        ReservarTurno1.reservar(Servicios.getTratamientos());
+        ReservarTurno1.reservar(Tratamiento.getTratamientos());
     }
     public static void mostrarTurnos(List<String> turnos, String[][] cronograma) {
         int numDias = 30;
@@ -192,7 +192,7 @@ public class ReservarTurno1 {
         return telefono.matches(PHONE_REGEX);
     }
  
-    public static String[][] reservar(List<Servicios> tratamientos) {
+    public static String[][] reservar(List<Tratamiento> tratamientos) {
         Scanner entrada = new Scanner(System.in);
         String[][] reserva = new String[20][3];
         String[][] cronograma = llenarMatrices();
@@ -217,7 +217,7 @@ public class ReservarTurno1 {
 
             do {
                 System.out.println("A continuación le mostraremos nuestros servicios disponibles:\n");
-                for (Servicios tratamiento : Servicios.getTratamientos()) {
+                for (Tratamiento tratamiento : Tratamiento.getTratamientos()) {
 //                    System.out.println("Servicio N°" + numServicios);
 //                    servicios.mostrarServicio();
                     System.out.println(tratamiento);
@@ -264,7 +264,7 @@ public class ReservarTurno1 {
         } while (otraReserva);
         System.out.println("\nSu reserva ya fue recibida!!");
         System.out.println(reserva[numFila][numCol]);
-        System.out.println(Servicios.getTratamientos(Integer.parseInt(reserva[numFila][numCol + 1])-1));
+        System.out.println(Tratamiento.getTratamientos(Integer.parseInt(reserva[numFila][numCol + 1])-1));
         return reserva;
     }
 

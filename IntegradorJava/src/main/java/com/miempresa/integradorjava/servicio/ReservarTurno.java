@@ -1,6 +1,7 @@
 package com.miempresa.integradorjava.servicio;
 
 import com.miempresa.integradorjava.modelo.Cliente;
+import com.miempresa.integradorjava.modelo.Tratamiento;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -187,7 +188,7 @@ public class ReservarTurno {
         return telefono.matches(PHONE_REGEX);
     }
 
-    public String[][] reservar(List<Servicios> listServices) {
+    public String[][] reservar(List<Tratamiento> listServices) {
         Scanner entrada = new Scanner(System.in);
         String[][] reserva = new String[20][3];
         String[][] cronograma = llenarMatrices();
@@ -212,7 +213,7 @@ public class ReservarTurno {
 
             do {
                 System.out.println("A continuación le mostraremos nuestros servicios disponibles:\n");
-                for (Servicios servicios : listServices) {
+                for (Tratamiento tratamiento : listServices) {
                     System.out.println("Servicio N°" + numServicios);
 //                    servicios.mostrarServicio();
                     numServicios++;
