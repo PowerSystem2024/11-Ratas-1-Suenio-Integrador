@@ -4,14 +4,14 @@ public class Utilidades {
 
   //Encabezado a usar en cada sección
   public static void encabezado(String encabezado){
-    System.out.println("------------------------------------------------");
+    System.out.println("\n------------------------------------------------");
     System.out.println("Menú   >>  " + encabezado);
     System.out.println("------------------------------------------------");
     System.out.println();
   }
   //Encabezado para la sección de contacto
   public static void encabezadoContacto(String encabezado, String encabezado2){
-    System.out.println("------------------------------------------------");
+    System.out.println("\n------------------------------------------------");
     System.out.println("Menú   >>  " + encabezado + "  >>  " + encabezado2);
     System.out.println("------------------------------------------------");
     System.out.println();

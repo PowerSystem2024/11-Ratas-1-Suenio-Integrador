@@ -66,10 +66,4 @@ public class Tratamiento {
     sb.append("\n");
     return sb.toString();
   }
-
-
-
-
-
 }
-
