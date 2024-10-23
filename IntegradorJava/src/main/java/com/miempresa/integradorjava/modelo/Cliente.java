@@ -1,7 +1,6 @@
 package com.miempresa.integradorjava.modelo;
 
 public class Cliente {
-  //Atributos
   private static int contador = 1;
   private String nombre;
   private String apellido;
@@ -47,8 +46,15 @@ public class Cliente {
     this.telefono = telefono;
   }
 
+  //toString
   @Override
   public String toString() {
-    return "Cliente N:" + ID + "\nNombre: " + nombre + "\nApellido: " + apellido + "\nCorreo: " + correo + "\nTeléfono: " + telefono;
+    final StringBuilder sb = new StringBuilder("Cliente " + getID() + ": \n");
+    sb.append("\t Nombre: ").append(getNombre());
+    sb.append(", Apellido: ").append(getApellido());
+    sb.append(", Correo: ").append(getCorreo());
+    sb.append(", Telefono: ").append(getTelefono());
+    sb.append(' ');
+    return sb.toString();
   }
 }
